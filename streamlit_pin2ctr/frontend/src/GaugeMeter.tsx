@@ -12,7 +12,7 @@ import GaugeChart from "react-gauge-chart"
  */
 interface PythonArgs {
   label: string
-  initialValue?: number[]
+  initialValue?: number
 }
 
 /**
@@ -31,7 +31,7 @@ const GaugeMeter = (props: ComponentProps) => {
 
   return (
     <>
-      <h3>{label}</h3>
+      <h3>HI THERE</h3>
       <GaugeChart id="gauge-chart2" nrOfLevels={4} percent={0.86} />
     </>
   )
