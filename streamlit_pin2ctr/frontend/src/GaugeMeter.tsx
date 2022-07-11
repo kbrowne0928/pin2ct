@@ -4,7 +4,7 @@ import {
   Streamlit,
   withStreamlitConnection,
 } from "streamlit-component-lib"
-import { Slider } from "baseui/slider"
+import GaugeChart from "react-gauge-chart"
 
 /**
  * We can use a Typescript interface to destructure the arguments from Python
@@ -12,9 +12,7 @@ import { Slider } from "baseui/slider"
  */
 interface PythonArgs {
   label: string
-  minValue?: number
-  maxValue?: number
-  initialValue: number[]
+  initialValue?: number
 }
 
 /**
@@ -22,27 +20,21 @@ interface PythonArgs {
  * We store props in state and pass value directly to underlying Slider
  * and then back to Streamlit.
  */
-const CustomSlider = (props: ComponentProps) => {
+const GaugeMeter = (props: ComponentProps) => {
   // Destructure using Typescript interface
   // This ensures typing validation for received props from Python
-  const { label, minValue, maxValue, initialValue }: PythonArgs = props.args
+  const { label, initialValue }: PythonArgs = props.args
   const [value, setValue] = useState(initialValue)
 
   useEffect(() => Streamlit.setFrameHeight())
-  console.log("TEST VALUE", value)
+  Streamlit.setComponentValue(50)
 
   return (
     <>
-      <h3>hi</h3>
-      <Slider
-        value={value}
-        onChange={({ value }) => value && setValue(value)}
-        onFinalChange={({ value }) => Streamlit.setComponentValue(value)}
-        min={minValue}
-        max={maxValue}
-      />
+      <h3>HI THERE</h3>
+      <GaugeChart id="gauge-chart2" nrOfLevels={4} percent={0.86} />
     </>
   )
 }
 
-// export default withStreamlitConnection(CustomSlider)
+export default withStreamlitConnection(GaugeMeter)
