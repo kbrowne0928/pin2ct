@@ -12,8 +12,6 @@ import GaugeChart from "react-gauge-chart"
  */
 interface PythonArgs {
   label: string
-  minValue?: number
-  maxValue?: number
   initialValue?: number[]
 }
 
@@ -25,7 +23,7 @@ interface PythonArgs {
 const GaugeMeter = (props: ComponentProps) => {
   // Destructure using Typescript interface
   // This ensures typing validation for received props from Python
-  const { label, minValue, maxValue, initialValue }: PythonArgs = props.args
+  const { label, initialValue }: PythonArgs = props.args
   const [value, setValue] = useState(initialValue)
 
   useEffect(() => Streamlit.setFrameHeight())
@@ -33,8 +31,8 @@ const GaugeMeter = (props: ComponentProps) => {
 
   return (
     <>
-      <h3>HELLO</h3>
-      <GaugeChart id="gauge-chart2" nrOfLevels={20} percent={0.86} />
+      <h3>HI TRASH</h3>
+      <GaugeChart id="gauge-chart2" nrOfLevels={4} percent={0.86} />
     </>
   )
 }

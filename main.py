@@ -1,32 +1,11 @@
 import os
 
 import streamlit as st
-import streamlit.components.v1 as components
 
 from html_mardown import app_off,app_off2, model_predicting, loading_bar, result_pred, image_uploaded_success, more_options, class0, class1, class2, class3, class4, s_load_bar, class0_side, class1_side, class2_side, class3_side, class4_side, unknown, unknown_side, unknown_w, unknown_msg
 from pagination import paginator
 from score_translation import score_translation
-from typing import Tuple
-
-# Now the React interface only accepts an array of 1 or 2 elements.
-# _component_func = components.declare_component(
-#     "custom_slider",
-#     url="http://localhost:3001",
-# )
-
-_component_func = components.declare_component(
-    "gauge_meter",
-    url="http://localhost:3001",
-)
-
-# Edit arguments sent and result received from React component, so the initial input is converted to an array and returned value extracted from the component
-# def st_custom_slider(label: str, min_value: int, max_value: int, value: int = 0, key=None) -> int:
-#     component_value = _component_func(label=label, minValue=min_value, maxValue=max_value, initialValue=[value], key=key, default=[value])
-#     return component_value[0]
-
-def st_gauge_chart(label: str, value: int = 0, key=None) -> int:
-    component_value = _component_func(label=label, initialValue=[value], key=key, default=[value])
-    return component_value[0]
+from streamlit_pin2ctr import st_gauge_chart
 
 
 def do_stuff_on_page_load():
@@ -151,7 +130,7 @@ if uploaded_image is not None:
 if choice != 'Select an Image':
     deploy()
 
-v_custom = st_gauge_chart('THIS IS MY TEST LABEL')
+v_custom = st_gauge_chart('THIS IS MY TEST LABEL', 50)
 st.write(v_custom)
 # Press the green button in the gutter to run the script.
 # if __name__ == '__main__':
