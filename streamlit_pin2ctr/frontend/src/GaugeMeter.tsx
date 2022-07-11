@@ -31,7 +31,7 @@ const GaugeMeter = (props: ComponentProps) => {
 
   return (
     <>
-      <h3>HI TRASH</h3>
+      <h3>{label}</h3>
       <GaugeChart id="gauge-chart2" nrOfLevels={4} percent={0.86} />
     </>
   )
