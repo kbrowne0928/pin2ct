@@ -25,14 +25,27 @@ const GaugeMeter = (props: ComponentProps) => {
   // This ensures typing validation for received props from Python
   const { label, initialValue }: PythonArgs = props.args
   const [value, setValue] = useState(initialValue)
+  const chartStyle = {
+    height: 150,
+  }
 
   useEffect(() => Streamlit.setFrameHeight())
-  Streamlit.setComponentValue(50)
 
   return (
     <>
-      <h3>HI THERE</h3>
-      <GaugeChart id="gauge-chart2" nrOfLevels={4} percent={0.86} />
+      <h3>{label}</h3>
+      <GaugeChart
+        id="gauge-chart1"
+        nrOfLevels={4}
+        percent={value ? value / 100 : 0}
+        colors={["#EA3323", "#F3AE3D", "#F8F826", "#75FB4C"]}
+        needleColor="#D1CFCF"
+        needleBaseColor="#D1CFCF"
+        textColor="#464A4F"
+      />
+      <p>
+        You're score is based on X, Y, and Z. Acaiberries gojiberries acroyoga{" "}
+      </p>
     </>
   )
 }

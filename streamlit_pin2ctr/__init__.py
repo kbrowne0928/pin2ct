@@ -7,6 +7,6 @@ _component_func = components.declare_component(
 )
 
 
-def st_gauge_chart(label: str, value: int = 0, key=None) -> int:
+def st_gauge_chart(label: str, value: int = 0, key=None):
     component_value = _component_func(label=label, initialValue=[value], key=key, default=[value])
     return component_value[0]

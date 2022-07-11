@@ -130,7 +130,7 @@ if uploaded_image is not None:
 if choice != 'Select an Image':
     deploy()
 
-v_custom = st_gauge_chart('THIS IS MY TEST LABEL', 50)
+v_custom = st_gauge_chart('Here are your results!', 86)
 st.write(v_custom)
 # Press the green button in the gutter to run the script.
 # if __name__ == '__main__':
