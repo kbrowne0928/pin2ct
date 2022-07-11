@@ -1,9 +1,10 @@
 import os
 
 import streamlit as st
-import pandas as pd
+
 from html_mardown import app_off,app_off2, model_predicting, loading_bar, result_pred, image_uploaded_success, more_options, class0, class1, class2, class3, class4, s_load_bar, class0_side, class1_side, class2_side, class3_side, class4_side, unknown, unknown_side, unknown_w, unknown_msg
 from pagination import paginator
+from score_translation import score_translation
 
 def do_stuff_on_page_load():
     st.set_page_config(layout="wide")
@@ -58,14 +59,19 @@ uploaded_image = st.file_uploader("Upload your image in JPG or PNG format", type
 
 
 def Loader(img_path=None,uploaded_image=None, upload_state=False, demo_state=True):
+        test_loader = {}
         if choice == 'Image 1':
-           test_loader = image_1
+           test_loader['image_dir'] = image_1
+           test_loader['score'] = 100
 
         elif choice == 'Image 2':
-           test_loader = image_2
+           test_loader['image_dir'] = image_2
+           test_loader['score'] = 65
+
 
         elif choice == 'Image 3':
-           test_loader = image_3
+           test_loader['image_dir'] = image_3
+           test_loader['score'] = 35
 
         return test_loader
 
@@ -75,22 +81,24 @@ def deploy(file_path=None,uploaded_image=uploaded_image, uploaded=False, demo=Tr
                 test_loader = Loader()
 
         st.sidebar.markdown(image_uploaded_success, unsafe_allow_html=True)
-        st.sidebar.image(f'{test_loader + choice}.png', width=301, channels='BGR')
-        good_images_dir = test_loader + 'good images'
-        bad_images_dir = test_loader + 'bad images'
+        st.sidebar.image(f'{test_loader["image_dir"] + choice}.png', width=301, channels='BGR')
+        good_images_dir = test_loader["image_dir"] + 'good images'
+        bad_images_dir = test_loader["image_dir"] + 'bad images'
         good_images = []
         bad_images = []
         # st.image(os.path.join(good_images,images), use_column_width=True)
         for image in os.listdir(good_images_dir):
-            good_image = os.path.join(good_images_dir,image)
-            good_images.append(good_image)
+            if image.endswith('.png'):
+                good_image = os.path.join(good_images_dir,image)
+                good_images.append(good_image)
 
         for image in os.listdir(bad_images_dir):
-            bad_image = os.path.join(bad_images_dir,image)
-            bad_images.append(bad_image)
+            if image.endswith('.png'):
+                bad_image = os.path.join(bad_images_dir,image)
+                bad_images.append(bad_image)
 
         st.title("Here are your results!")
-
+        st.write(f'Image Score: {test_loader["score"]}')
 
 
         st.write('<p class="big-font">Better performing similar imagery</p>', unsafe_allow_html=True)
@@ -101,6 +109,10 @@ def deploy(file_path=None,uploaded_image=uploaded_image, uploaded=False, demo=Tr
         st.markdown("""""")
         st.write('<p class="big-font">Worst performing similar imagery</p>', unsafe_allow_html=True)
         st.image(bad_images, width=375)
+
+
+        st.title("Summary")
+        st.write(score_translation(test_loader["score"]))
 
 
 #Deploy the model if the user uploads an image
