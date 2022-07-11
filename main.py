@@ -9,22 +9,25 @@ from score_translation import score_translation
 from typing import Tuple
 
 # Now the React interface only accepts an array of 1 or 2 elements.
+# _component_func = components.declare_component(
+#     "custom_slider",
+#     url="http://localhost:3001",
+# )
+
 _component_func = components.declare_component(
-    "custom_slider",
+    "gauge_meter",
     url="http://localhost:3001",
 )
 
-
 # Edit arguments sent and result received from React component, so the initial input is converted to an array and returned value extracted from the component
-def st_custom_slider(label: str, min_value: int, max_value: int, value: int = 0, key=None) -> int:
-    component_value = _component_func(label=label, minValue=min_value, maxValue=max_value, initialValue=[value], key=key, default=[value])
+# def st_custom_slider(label: str, min_value: int, max_value: int, value: int = 0, key=None) -> int:
+#     component_value = _component_func(label=label, minValue=min_value, maxValue=max_value, initialValue=[value], key=key, default=[value])
+#     return component_value[0]
+
+def st_gauge_chart(label: str, value: int = 0, key=None) -> int:
+    component_value = _component_func(label=label, initialValue=[value], key=key, default=[value])
     return component_value[0]
 
-
-# Define a new public method which takes as input a tuple of numbers to define a range slider, and returns back a tuple.
-def st_range_slider(label: str, min_value: int, max_value: int, value: Tuple[int, int], key=None) -> Tuple[int, int]:
-    component_value = _component_func(label=label, minValue=min_value, maxValue=max_value, initialValue=value, key=key, default=value)
-    return tuple(component_value)
 
 def do_stuff_on_page_load():
     st.set_page_config(layout="wide")
@@ -148,14 +151,10 @@ if uploaded_image is not None:
 if choice != 'Select an Image':
     deploy()
 
-
+v_custom = st_gauge_chart('THIS IS MY TEST LABEL')
+st.write(v_custom)
 # Press the green button in the gutter to run the script.
 # if __name__ == '__main__':
-v_custom = st_custom_slider('Hello world', 0, 100, 50, key="slider1")
-st.write(v_custom)
 
-# Add a range slider
-v_custom_range = st_range_slider('Hello world', 0, 100, (20, 60), key="slider2")
-st.write(v_custom_range)
 
 
