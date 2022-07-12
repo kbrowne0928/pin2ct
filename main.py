@@ -1,3 +1,4 @@
+from cgi import test
 import os
 
 import streamlit as st
@@ -15,9 +16,9 @@ do_stuff_on_page_load()
 
 my_path = 'images/'
 logo_path =  my_path + '1b7601e035a83c13c208b4ec905ee6d9.png'
-image_1 = my_path + 'Image 1/'
-image_2 = my_path + 'Image 2/'
-image_3 = my_path + 'Image 3/'
+image_1 = my_path + 'Dog/'
+image_2 = my_path + 'Coffee/'
+image_3 = my_path + "Women's Fashion/"
 
 with st.sidebar:
         st.sidebar.image(logo_path, use_column_width=True)
@@ -50,7 +51,7 @@ st.markdown('***')
 
 #Set the selectbox for demo images
 st.write('**Select an image for a DEMO**')
-menu = ['Select an Image','Image 1', 'Image 2', 'Image 3']
+menu = ['Select an Image','Dog', 'Coffee', "Women's Fashion"]
 choice = st.selectbox('Select an image', menu)
 
 
@@ -62,16 +63,16 @@ uploaded_image = st.file_uploader("Upload your image in JPG or PNG format", type
 
 def Loader(img_path=None,uploaded_image=None, upload_state=False, demo_state=True):
         test_loader = {}
-        if choice == 'Image 1':
+        if choice == 'Dog':
            test_loader['image_dir'] = image_1
            test_loader['score'] = 100
 
-        elif choice == 'Image 2':
+        elif choice == 'Coffee':
            test_loader['image_dir'] = image_2
            test_loader['score'] = 65
 
 
-        elif choice == 'Image 3':
+        elif choice == "Women's Fashion":
            test_loader['image_dir'] = image_3
            test_loader['score'] = 35
 
@@ -80,12 +81,12 @@ def Loader(img_path=None,uploaded_image=None, upload_state=False, demo_state=Tru
 def deploy(file_path=None,uploaded_image=uploaded_image, uploaded=False, demo=True):
         st.markdown('***')
         if demo:
-                test_loader = Loader()
+            test_loader = Loader()
 
         st.sidebar.markdown(image_uploaded_success, unsafe_allow_html=True)
         st.sidebar.image(f'{test_loader["image_dir"] + choice}.png', width=301, channels='BGR')
-        good_images_dir = test_loader["image_dir"] + 'good images'
-        bad_images_dir = test_loader["image_dir"] + 'bad images'
+        good_images_dir = test_loader["image_dir"] + 'good_images'
+        bad_images_dir = test_loader["image_dir"] + 'bad_images'
         good_images = []
         bad_images = []
         # st.image(os.path.join(good_images,images), use_column_width=True)
@@ -99,18 +100,29 @@ def deploy(file_path=None,uploaded_image=uploaded_image, uploaded=False, demo=Tr
                 bad_image = os.path.join(bad_images_dir,image)
                 bad_images.append(bad_image)
 
-        st.title("Here are your results!")
-        st.write(f'Image Score: {test_loader["score"]}')
-
 
         st.write('<p class="big-font">Better performing similar imagery</p>', unsafe_allow_html=True)
         # image_iterator = paginator("Select a dog image", good_images)
         # indices_on_page, images_on_page = map(list, zip(*image_iterator))
-        st.image(good_images, width=375)
+
+        col1, col2, col3 = st.columns([1,1,1])
+        with col1:
+            st.image(good_images[0], width=300)
+        with col2:
+            st.image(good_images[1], width=300)
+        with col3:
+            st.image(good_images[2], width=300)
 
         st.markdown("""""")
         st.write('<p class="big-font">Worst performing similar imagery</p>', unsafe_allow_html=True)
-        st.image(bad_images, width=375)
+
+        col1, col2, col3 = st.columns([1,1,1])
+        with col1:
+            st.image(bad_images[0], width=300)
+        with col2:
+            st.image(bad_images[1], width=300)
+        with col3:
+            st.image(bad_images[2], width=300)
 
 
         st.title("Summary")
@@ -126,12 +138,13 @@ if uploaded_image is not None:
     del uploaded_image
 
 
-
 if choice != 'Select an Image':
+    test_loader = Loader()
+    v_custom = st_gauge_chart('Here are your results!', test_loader['score'])
+    st.write(v_custom)
     deploy()
 
-v_custom = st_gauge_chart('Here are your results!', 86)
-st.write(v_custom)
+
 # Press the green button in the gutter to run the script.
 # if __name__ == '__main__':
 
