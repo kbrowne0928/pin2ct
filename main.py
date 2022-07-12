@@ -83,7 +83,7 @@ def deploy(file_path=None,uploaded_image=uploaded_image, uploaded=False, demo=Tr
         if demo:
             test_loader = Loader()
 
-        st.sidebar.markdown(image_uploaded_success, unsafe_allow_html=True)
+        st.sidebar.success("Image uploaded Successfully!")
         st.sidebar.image(f'{test_loader["image_dir"] + choice}.png', width=301, channels='BGR')
         good_images_dir = test_loader["image_dir"] + 'good_images'
         bad_images_dir = test_loader["image_dir"] + 'bad_images'
